@@ -44,56 +44,27 @@ src/job_search/
 
 ## Planned Enhancements
 
-### 1. 7-Block Deep Evaluation
-Replace the current single-shot summary + fit score with a structured 7-block evaluation inspired by career-ops:
+### 1. Enhanced Role Summary
+Replace the current single-shot summary + fit score with a richer role summary:
 
-| Block | Content |
-|-------|---------|
-| **A — Role Summary** | Archetype, domain, function, seniority, remote policy, team size, TL;DR |
-| **B — CV Match** | JD requirements mapped to CV lines, per-archetype proof point prioritization, gap analysis with mitigation |
-| **C — Level Strategy** | Detected vs target level, "sell senior" plan, downlevel negotiation approach |
-| **D — Comp Research** | Salary ranges via WebSearch (Glassdoor, Levels.fyi), company comp reputation |
-| **E — Customization Plan** | Top 5 CV changes + top 5 LinkedIn changes for the specific role |
-| **F — Interview Plan** | STAR+R stories mapped to JD requirements, story bank reuse |
-| **G — Posting Legitimacy** | Ghost job detection — posting age, apply button state, JD quality, reposting patterns |
+**Content:**
+- **Archetype** — LLMOps / Agentic / FDE / SA / PM / Transformation
+- **Domain** — platform, ML, enterprise, voice AI, etc.
+- **Function** — build / consult / manage / deploy
+- **Seniority** — inferred level from JD language
+- **Remote policy** — full remote / hybrid / onsite
+- **Team size** — if mentioned in JD
+- **TL;DR** — 1 sentence summary
 
-**Implementation notes:**
-- Archetypes: LLMOps, Agentic, FDE, SA, PM, Transformation
-- Per-archetype evaluation framing (different proof points per type)
-- Store full evaluation in DB alongside job record
-- Telegram notifications include block-level highlights, not just summary
-
-### 2. Ghost Job Detection (Block G)
-Assess whether a job posting is real and active before surfacing it:
-
-**Signals to analyze:**
-- Posting age (from page content or "X days ago" text)
-- Apply button state (active / closed / redirects to generic)
-- URL redirect patterns (careers page redirect = high confidence of closure)
-- JD quality (generic boilerplate vs role-specific details)
-- Requirements realism (contradictions like "entry-level title + staff requirements")
-- Company hiring signals (WebSearch for layoffs, hiring freezes)
-- Reposting detection (same company + role seen before in scan history)
+**Rationale:**
+- Different archetypes prioritize different proof points — a LLMOps role values observability and evals differently than an FDE role
+- Per-archetype framing makes summaries more actionable and relevant
+- Currently `enrich.py` uses a generic "recent graduate with finance/engineering background" — this adapts to the actual role type
 
 **Implementation notes:**
-- Run after scraping, before GICS classification
-- Store legitimacy tier (High Confidence / Proceed with Caution / Suspicious) in DB
-- Jobs flagged as Suspicious are still stored but marked with warning
-- Telegram notification can include legitimacy indicator
-
-### 3. Story Bank
-Build a reusable interview story bank across all evaluated jobs:
-
-**STAR+R format per story:**
-- Situation, Task, Action, Result, + Reflection (signals seniority)
-
-**Implementation notes:**
-- `data/story-bank.md` accumulates stories across evaluations
-- Stories tagged by theme/skill (e.g., "leadership", "technical challenge", "conflict")
-- During Block F (Interview Plan), existing stories are matched to new JD requirements
-- Stories are deduplicated and merged when similar situations arise
-- Per-archetype story framing (FDE prioritizes delivery speed stories, SA prioritizes architectural decisions, etc.)
-- Write new stories to `data/story-bank.md` only when no existing story matches the JD requirement
+- Add `archetype` field to jobs DB
+- Refactor `enrich.py` to output structured summary fields instead of free-text summary + score
+- Archetype detection via keyword matching (see archetypes in career-ops `_shared.md`)
 
 ## Config
 Edit `config/config.yaml`. Key sections:
@@ -116,7 +87,6 @@ Edit `config/config.yaml`. Key sections:
 ## Database
 - `data/jobs.db` — stored jobs (auto-created via sqlite3)
 - `data/rejections.db` — rejected jobs with reasons
-- `data/story-bank.md` — interview story bank (planned)
 - DB paths are relative to project root, auto-created on first run
 
 ## Quirks
