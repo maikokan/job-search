@@ -1,0 +1,39 @@
+[project]
+name = "job-search"
+version = "1.0.0"
+description = "Job scraping with GICS classification, AI enrichment, and Telegram notifications"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "python-jobspy",
+    "pyyaml",
+]
+
+[project.scripts]
+job-search = "job_search.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "ruff",
+    "mypy",
+    "pytest>=9.0.3",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_ignores = true
+disallow_untyped_defs = false
+ignore_missing_imports = true

@@ -1,0 +1,98 @@
+ai:
+  model: "free-stack"
+  api_key: "sk-8d9eb16dc29826c9-5adf39-e308ea7f"
+  endpoint: "http://localhost:20128/v1/chat/completions"
+  classify_batch_size: 5
+  enrich_batch_size: 5
+
+search:
+  terms:
+    - intern
+    - graduate
+    - analyst
+    - credit
+  locations:
+    - Hong Kong
+  hours_old: 24
+  results_per_term: 100
+  is_remote: false
+
+scrapers:
+  sites:
+    - linkedin
+  linkedin_fetch_description: true
+  max_workers: 8
+
+database:
+  path: data/jobs.db
+  retention_days: 365
+
+reject_words:
+  - Senior
+  - Sr.
+  - Lead
+  - Principal
+  - VP
+  - Vice President
+  - Director
+  - Manager
+  - Head
+  - Chief
+  - Executive
+  - Partner
+  - MD
+  - President
+  - Chairman
+  - CFO
+  - COO
+  - CTO
+  - CEO
+  - Engineer
+  - Customer
+  - HR
+  - Marketing
+
+desired_gics:
+  - "40101010"  # Diversified Banks
+  - "40101015"  # Regional Banks
+  - "40201020"  # Diversified Financial Services
+  - "40201030"  # Multi-Sector Holdings
+  - "40201040"  # Specialized Finance
+  - "40201050"  # Commercial & Residential Mortgage Finance
+  - "40201060"  # Transaction & Payment Processing Services
+  - "40202010"  # Consumer Finance
+  - "40203010"  # Asset Management & Custody Banks
+  - "40203020"  # Investment Banking & Brokerage
+  - "40203030"  # Diversified Capital Markets
+  - "40203040"  # Financial Exchanges & Data
+  - "40204010"  # Mortgage REITs
+  - "60101010"  # Diversified REITs
+  - "60102510"  # Industrial REITs
+  - "60103010"  # Hotel & Resort REITs
+  - "60104010"  # Office REITs
+  - "60105010"  # Health Care REITs
+  - "60106010"  # Multi-Family Residential REITs
+  - "60106020"  # Single-Family Residential REITs
+  - "60107010"  # Retail REITs
+  - "60108010"  # Other Specialized REITs
+  - "60108020"  # Self-Storage REITs
+  - "60108030"  # Telecom Tower REITs
+  - "60108040"  # Timber REITs
+  - "60108050"  # Data Center REITs
+  - "20202020"  # Research & Consulting Services
+
+rejected_gics:
+  - "40301020"  # Life & Health Insurance
+  - "40301010"  # Insurance Brokers
+  - "40301030"  # Multi-line Insurance
+  - "40301040"  # Property & Casualty Insurance
+  - "40301050"  # Reinsurance
+
+candidate:
+  resume_path: "resume.txt"
+  profile_path: "profile.txt"
+
+notifications:
+  enabled: true
+  channel: telegram
+  notify_only_new: true
