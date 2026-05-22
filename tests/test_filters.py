@@ -1,4 +1,3 @@
-import pytest
 from src.scrape import filter_by_reject_words, filter_location
 
 

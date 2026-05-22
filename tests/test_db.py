@@ -1,9 +1,8 @@
-import pytest
-import tempfile
-import sqlite3
 import os
-from pathlib import Path
-from src.db import setup_database, store_job, job_id, reject_and_remove
+import sqlite3
+import tempfile
+
+from src.db import job_id, reject_and_remove, setup_database, store_job
 
 
 def test_wal_mode_enabled():

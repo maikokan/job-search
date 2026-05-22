@@ -1,10 +1,8 @@
 # tests/job_search/test_cli.py
-import pytest
-import tempfile
-import os
-import shutil
 from pathlib import Path
+
 from src.cli import load_config
+
 
 def test_load_config_from_project_root(tmp_path, monkeypatch):
     """Config loaded from project root config.yaml."""

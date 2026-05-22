@@ -1,5 +1,3 @@
-import pytest
-from unittest.mock import patch, MagicMock
 from src.gics import classify_gics_batch
 
 

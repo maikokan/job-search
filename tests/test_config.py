@@ -1,5 +1,7 @@
 import pytest
-from src.config import validate_config, ValidatedConfig
+
+from src.config import validate_config
+
 
 def test_empty_desired_gics_no_ai_allowed():
     """No desired_gics, no AI — should pass (no filtering)."""
@@ -14,7 +16,7 @@ def test_empty_desired_gics_with_ai_ok():
 def test_desired_gics_with_no_ai_skips_validation():
     """desired_gics set, --no-ai flag, no AI config — should pass (GICS filter skipped)."""
     cfg = validate_config({"desired_gics": ["40101010"], "ai": {"endpoint": ""}}, no_ai=True)
-    assert cfg.no_ai == True
+    assert cfg.no_ai
     assert cfg.desired_gics == [40101010]
 
 def test_desired_gics_with_empty_ai_raises():

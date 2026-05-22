@@ -1,6 +1,7 @@
-import pytest
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock
+
 from src.pipeline import Pipeline
+
 
 def test_no_ai_skips_gics_and_enrich(monkeypatch):
     """--no-ai skips classify and enrich entirely."""

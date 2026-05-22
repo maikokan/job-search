@@ -90,7 +90,7 @@ def enrich_batch(jobs: List[Dict], config: dict, ai_config: Dict) -> None:
             "For each job below, provide:\n"
             "1) A 3-5 sentence summary: day-to-day duties, key qualifications, team/reporting context, conditions\n"
             "2) A fit score (0-10) for this candidate\n\n"
-            "Candidate is a recent graduate with finance/engineering background.\n\n"
+            "Candidate background is configured in profile — evaluate fit based on general career progression.\n\n"
             f"Jobs to evaluate:\n{numbered}\n\n"
             'Reply with a JSON array:\n'
             '[{"index": 0, "summary": "...", "fit": 7}, ...]\n'

@@ -38,7 +38,7 @@ class Pipeline:
         """Run full pipeline: scrape → filter → classify → enrich → notify → prune."""
         logger.info("Starting job search pipeline")
 
-        app_dir = Path(__file__).parent.parent.parent
+        app_dir = Path(__file__).parent.parent
         db_path = app_dir / self.config.get("database", {}).get("path", "data/jobs.db")
         retention = self.config.get("database", {}).get("retention_days", 365)
 
@@ -157,23 +157,23 @@ class Pipeline:
         # Store and match
         matched = []
         for j in jobs:
-            if not self.dry_run:
-                store_job(conn, j)
-
             gics = j.get('gics_code')
+            reason = None
+
             if gics is None:
-                if not self.dry_run:
-                    reject_and_remove(conn, j, 'gics_no_match', 'code=NULL')
+                reason = 'gics_no_match'
             elif desired_gics and gics not in desired_gics:
-                if not self.dry_run:
-                    reject_and_remove(conn, j, 'gics_no_match', f'code={gics}')
+                reason = 'gics_no_match'
             elif rejected_gics and gics in rejected_gics:
+                reason = 'gics_rejected'
+
+            if reason:
                 if not self.dry_run:
-                    reject_and_remove(conn, j, 'gics_rejected', f'code={gics}')
-            elif desired_gics:
-                if not self.dry_run:
-                    reject_and_remove(conn, j, 'gics_no_match', f'code={gics}')
+                    store_job(conn, j)
+                    reject_and_remove(conn, j, reason, f'code={gics}')
             else:
+                if not self.dry_run:
+                    store_job(conn, j)
                 matched.append(j)
 
         return matched
@@ -187,7 +187,7 @@ class Pipeline:
         enrich_batch(jobs, self.config, ai_config)
 
         # Update DB
-        app_dir = Path(__file__).parent.parent.parent
+        app_dir = Path(__file__).parent.parent
         db_path = app_dir / self.config.get("database", {}).get("path", "data/jobs.db")
         conn = setup_database(str(db_path))
         for j in jobs:
@@ -205,7 +205,7 @@ class Pipeline:
     def notify(self, jobs: List[Dict]) -> None:
         """Send jobs to Telegram."""
         if notify_telegram(jobs):
-            app_dir = Path(__file__).parent.parent.parent
+            app_dir = Path(__file__).parent.parent
             db_path = app_dir / self.config.get("database", {}).get("path", "data/jobs.db")
             conn = setup_database(str(db_path))
             for j in jobs:
