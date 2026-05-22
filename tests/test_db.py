@@ -3,7 +3,7 @@ import tempfile
 import sqlite3
 import os
 from pathlib import Path
-from job_search.db import setup_database, store_job, job_id, reject_and_remove
+from src.db import setup_database, store_job, job_id, reject_and_remove
 
 
 def test_wal_mode_enabled():

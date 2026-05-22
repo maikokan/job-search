@@ -5,7 +5,7 @@ import logging
 import re
 from typing import Dict, List
 
-from job_search.gics import llm_call
+from src.gics import llm_call
 
 logger = logging.getLogger(__name__)
 

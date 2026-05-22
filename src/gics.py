@@ -18,7 +18,7 @@ def load_gics_reference() -> str:
     """Load GICS reference from data file. Caches result."""
     global _GICS_REFERENCE_CACHE
     if _GICS_REFERENCE_CACHE is None:
-        data_path = Path(__file__).parent.parent.parent / "data" / "gics_reference.csv"
+        data_path = Path(__file__).parent.parent / "data" / "gics_reference.csv"
         _GICS_REFERENCE_CACHE = data_path.read_text()
     return _GICS_REFERENCE_CACHE
 

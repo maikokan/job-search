@@ -1,5 +1,5 @@
 import pytest
-from job_search.scrape import filter_by_reject_words, filter_location
+from src.scrape import filter_by_reject_words, filter_location
 
 
 def test_filter_by_reject_words():

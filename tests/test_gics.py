@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch, MagicMock
-from job_search.gics import classify_gics_batch
+from src.gics import classify_gics_batch
 
 
 def test_batches_of_n(monkeypatch):
@@ -12,7 +12,7 @@ def test_batches_of_n(monkeypatch):
         call_count[0] += 1
         return mock_response
 
-    monkeypatch.setattr('job_search.gics.llm_call', mock_llm)
+    monkeypatch.setattr('src.gics.llm_call', mock_llm)
 
     jobs = [
         {'company': f'Company{i}', 'title': 'Analyst', 'description': 'desc'}

@@ -2,18 +2,18 @@ import logging
 from pathlib import Path
 from typing import Dict, List
 
-from job_search.config import ValidatedConfig
-from job_search.db import (
+from src.config import ValidatedConfig
+from src.db import (
     job_id,
     prune_old,
     reject_and_remove,
     setup_database,
     store_job,
 )
-from job_search.enrich import enrich_batch
-from job_search.gics import classify_gics_batch, classify_gics_batch_retry
-from job_search.scrape import filter_by_reject_words, filter_location, search_all
-from job_search.telegram import notify_telegram
+from src.enrich import enrich_batch
+from src.gics import classify_gics_batch, classify_gics_batch_retry
+from src.scrape import filter_by_reject_words, filter_location, search_all
+from src.telegram import notify_telegram
 
 logger = logging.getLogger(__name__)
 

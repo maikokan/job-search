@@ -4,7 +4,7 @@ import tempfile
 import os
 import shutil
 from pathlib import Path
-from job_search.cli import load_config
+from src.cli import load_config
 
 def test_load_config_from_project_root(tmp_path, monkeypatch):
     """Config loaded from project root config.yaml."""

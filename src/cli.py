@@ -6,8 +6,8 @@ from pathlib import Path
 
 import yaml
 
-from job_search.config import validate_config
-from job_search.pipeline import Pipeline
+from src.config import validate_config
+from src.pipeline import Pipeline
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +17,7 @@ def load_config(config_path: str | None = None) -> dict:
     if config_path:
         path = Path(config_path)
     else:
-        app_dir = Path(__file__).parent.parent.parent
+        app_dir = Path(__file__).parent.parent
         path = app_dir / 'config.yaml'
 
     if path.exists():

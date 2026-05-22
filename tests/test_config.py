@@ -1,5 +1,5 @@
 import pytest
-from job_search.config import validate_config, ValidatedConfig
+from src.config import validate_config, ValidatedConfig
 
 def test_empty_desired_gics_no_ai_allowed():
     """No desired_gics, no AI — should pass (no filtering)."""
